@@ -128,7 +128,9 @@ void bind_submodule(py::module_ const& m) {
 		.value("is_basis_lower", NodeBipartiteObs::VariableFeatures::is_basis_lower)
 		.value("is_basis_basic", NodeBipartiteObs::VariableFeatures::is_basis_basic)
 		.value("is_basis_upper", NodeBipartiteObs::VariableFeatures::is_basis_upper)
-		.value("is_basis_zero", NodeBipartiteObs::VariableFeatures ::is_basis_zero);
+		.value("is_basis_zero", NodeBipartiteObs::VariableFeatures ::is_basis_zero)
+		.value("lower_bound", NodeBipartiteObs::VariableFeatures::lower_bound)
+		.value("upper_bound", NodeBipartiteObs::VariableFeatures::upper_bound);
 
 	py::enum_<NodeBipartiteObs::RowFeatures>(node_bipartite_obs, "RowFeatures")
 		.value("bias", NodeBipartiteObs::RowFeatures::bias)

@@ -132,8 +132,12 @@ void set_dynamic_features_for_var(
 	SCIP_COL* const col,
 	value_type obj_norm,
 	value_type n_lps) {
-	out[idx(VariableFeatures::has_lower_bound)] = static_cast<value_type>(lower_bound(scip, col).has_value());
-	out[idx(VariableFeatures::has_upper_bound)] = static_cast<value_type>(upper_bound(scip, col).has_value());
+	auto the_lower_bound = lower_bound(scip, col);
+	out[idx(VariableFeatures::lower_bound)] = the_lower_bound.value_or(static_cast<value_type>(0));
+	out[idx(VariableFeatures::has_lower_bound)] = static_cast<value_type>(the_lower_bound.has_value());
+	auto the_upper_bound = upper_bound(scip, col);
+	out[idx(VariableFeatures::upper_bound)] = the_upper_bound.value_or(static_cast<value_type>(0));
+	out[idx(VariableFeatures::has_upper_bound)] = static_cast<value_type>(the_upper_bound.has_value());
 	out[idx(VariableFeatures::normed_reduced_cost)] = SCIPgetVarRedcost(scip, var) / obj_norm;
 	out[idx(VariableFeatures::solution_value)] = SCIPvarGetLPSol(var);
 	out[idx(VariableFeatures::solution_frac)] = feas_frac(scip, var).value_or(0.);
